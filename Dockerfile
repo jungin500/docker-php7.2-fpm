@@ -1,11 +1,4 @@
-#
-# NOTE: THIS DOCKERFILE IS GENERATED VIA "update.sh"
-#
-# PLEASE DO NOT EDIT IT DIRECTLY.
-#
-
 FROM debian:stretch-slim
-RUN sed -i 's/deb.debian.org/ftp.kaist.ac.kr/g' /etc/apt/sources.list
 
 # prevent Debian's PHP packages from being installed
 # https://github.com/docker-library/php/pull/542
