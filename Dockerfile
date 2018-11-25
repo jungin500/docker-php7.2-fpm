@@ -50,7 +50,7 @@ ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
 ENV GPG_KEYS 1729F83938DA44E27BA0F4D3DBDB397470D12172 B1B44D8F021E4E2D6021E995DC9FF8D3EE5AF27F
 
 ENV PHP_VERSION 7.2.12
-ENV PHP_URL="https://secure.php.net/get/php-7.2.12.tar.xz/from/this/mirror" PHP_ASC_URL="https://secure.php.net/get/php-7.2.12.tar.xz.asc/from/this/mirror"
+ENV PHP_URL="https://secure.php.net/get/php-7.2.12.tar.xz/from/this/mirror"
 ENV PHP_SHA256="989c04cc879ee71a5e1131db867f3c5102f1f7565f805e2bb8bde33f93147fe1" PHP_MD5=""
 
 RUN set -xe; \
@@ -80,16 +80,6 @@ RUN set -xe; \
 		echo "$PHP_MD5 *php.tar.xz" | md5sum -c -; \
 	fi; \
 	\
-	if [ -n "$PHP_ASC_URL" ]; then \
-		wget -O php.tar.xz.asc "$PHP_ASC_URL"; \
-		export GNUPGHOME="$(mktemp -d)"; \
-		for key in $GPG_KEYS; do \
-			gpg --batch --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
-		done; \
-		gpg --batch --verify php.tar.xz.asc php.tar.xz; \
-		command -v gpgconf > /dev/null && gpgconf --kill all; \
-		rm -rf "$GNUPGHOME"; \
-	fi; \
 	wget https://pecl.php.net/get/redis-4.2.0.tgz -O /tmp/redis.tgz; \
 	wget https://pecl.php.net/get/apcu-5.1.14.tgz -O /tmp/apcu.tgz; \
 	\
